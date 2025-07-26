@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_07_26_141724) do
+ActiveRecord::Schema[7.0].define(version: 2025_07_26_144840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,36 @@ ActiveRecord::Schema[7.0].define(version: 2025_07_26_141724) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["api_key"], name: "index_clients_on_api_key"
+  end
+
+  create_table "points_events", force: :cascade do |t|
+    t.bigint "transaction_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["transaction_id"], name: "index_points_events_on_transaction_id"
+    t.index ["user_id"], name: "index_points_events_on_user_id"
+  end
+
+  create_table "rewards", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "reward_type"
+    t.datetime "issued_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["issued_at"], name: "index_rewards_on_issued_at"
+    t.index ["user_id"], name: "index_rewards_on_user_id"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "amount_cents"
+    t.string "country_code"
+    t.datetime "occurred_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -36,5 +66,9 @@ ActiveRecord::Schema[7.0].define(version: 2025_07_26_141724) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "points_events", "transactions"
+  add_foreign_key "points_events", "users"
+  add_foreign_key "rewards", "users"
+  add_foreign_key "transactions", "users"
   add_foreign_key "users", "clients"
 end
