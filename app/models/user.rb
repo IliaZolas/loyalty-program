@@ -11,4 +11,5 @@ class User < ApplicationRecord
   has_many :rewards,       dependent: :destroy
 
   validates :email, presence: true, uniqueness: true
+  validates :home_country_code, presence: true
 end
