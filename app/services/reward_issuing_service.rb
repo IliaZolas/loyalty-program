@@ -28,7 +28,7 @@ class RewardIssuingService
     def issue_monthly_coffee
         return if already_issued?(:free_coffee, scope: :monthly)
 
-        create_reward(:free_coffee)
+        create_reward(:free_coffee, "100 Points Coffee")
     end
 
     def birthday_month?
@@ -38,7 +38,7 @@ class RewardIssuingService
     def issue_birthday_coffee
         return if already_issued?(:free_coffee, scope: :birthday_month)
 
-        create_reward(:free_coffee)
+        create_reward(:free_coffee, "Birthday Coffee")
     end
 
     def new_user_spend_condition?
@@ -54,7 +54,7 @@ class RewardIssuingService
     def issue_new_user_movie
         return if already_issued?(:movie_ticket, scope: :new_user)
 
-        create_reward(:movie_ticket)
+        create_reward(:movie_ticket, "$1000 spent within 60 days of first transaction")
     end
 
     # Helpers
@@ -82,7 +82,11 @@ class RewardIssuingService
         end
     end
 
-    def create_reward(type)
-        @user.rewards.create!(reward_type: type, issued_at: Time.current)
+    def create_reward(type, reason)
+        @user.rewards.create!(
+            reward_type: type, 
+            issued_at: Time.current,
+            reason: reason
+        )
     end
 end
