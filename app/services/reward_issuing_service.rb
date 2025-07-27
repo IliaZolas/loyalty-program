@@ -10,7 +10,7 @@ class RewardIssuingService
         issued << issue_birthday_coffee  if birthday_month?
         issued << issue_new_user_movie   if new_user_spend_condition?
         issued.compact
-    end
+    end 
 
     private
 
