@@ -1,6 +1,6 @@
-**Ramen-Crazy, Loyalty Reward App**
+**Loyalty Reward App**
 
-A Ruby on Rails application implementing a loyalty rewards program for customers of "Ramen-Crazy". This app provides secure API endpoints to track user transactions, calculate loyalty points, and issue rewards based on spending rules.
+A Ruby on Rails application implementing a loyalty rewards program for customers. This app provides secure API endpoints to track user transactions, calculate loyalty points, and issue rewards based on spending rules.
 
 ---
 
@@ -21,8 +21,8 @@ Ensure you have the following installed on your machine:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/<your-username>/ramen-crazy.git
-   cd ramen-crazy
+   git clone https://github.com/IliaZolas/loyalty-program.git
+   cd loyalty-program
    ```
 
 2. **Install Ruby gems**
@@ -39,7 +39,7 @@ Ensure you have the following installed on your machine:
 
 ## Database Setup
 
-4. **Create and migrate the database**
+1. **Create and migrate the database**
 
    ```bash
    rails db:create
@@ -90,7 +90,7 @@ bundle exec rspec
 
 ---
 
-4. **Postman or Curl**
+**Postman or Curl**
 
 If using Postman, use this structure and variables.
 
@@ -135,7 +135,7 @@ GET Request - Rewards
 ```bash
 curl -i \
   -H "Accept: application/json" \
-  -H "Authorization: Bearer zNGEAT4VGjK6HLrhTkVrXvLG" \
+  -H "Authorization: Bearer PASTE-CLIENT-KEY-HERE" \
   http://localhost:3000/api/v1/users/1/rewards.json
   ```
 
