@@ -12,7 +12,13 @@ module Api
 
                 render json: {
                         points_awarded: points_event.points,
-                        rewards: new_rewards.map { |r| { type: r.reward_type, issued_at: r.issued_at } }
+                        total_points: user.points_events.sum(:points),
+                        dollars_spent: user.transactions.sum(:amount_cents) / 100.0,
+                        rewards: new_rewards.map { |r| { 
+                            type: r.reward_type, 
+                            reason: r.reason,
+                            issued_at: r.issued_at 
+                            } }
                         },
                         status: :created
             end
