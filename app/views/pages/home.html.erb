@@ -1,1 +1,50 @@
-<div>Loyalty Platform, Ramen Shop Coffee Rewards</div>
+<% if user_signed_in? %>
+  <h1>Your Dashboard</h1>
+
+  <!-- Simulated purchase form -->
+  <%= form_with url: transactions_path, scope: :transaction, local: true do |f| %>
+    <div>
+      <%= f.label :amount_cents, "Amount (cents)" %><br>
+      <%= f.number_field :amount_cents, value: 10000, min: 0 %>
+    </div>
+    <div>
+      <%= f.label :country_code %><br>
+      <%= f.text_field :country_code, value: "US" %>
+    </div>
+    <div>
+      <%= f.label :occurred_at, "When" %><br>
+      <%= f.datetime_select :occurred_at, default: Time.current %>
+    </div>
+    <%= f.submit "Submit Purchase" %>
+  <% end %>
+
+  <!-- Display flash‑driven results -->
+  <% if flash[:points_awarded] %>
+    <h2>Results</h2>
+    <p><strong>Points this purchase:</strong> <%= flash[:points_awarded] %></p>
+    <p><strong>Total points:</strong>         <%= flash[:total_points] %></p>
+
+    <% rewards = flash[:new_rewards] || [] %>
+    <% if rewards.any? %>
+      <h3>New Rewards Unlocked!</h3>
+      <ul>
+        <% rewards.each do |r| %>
+          <li>
+            <strong><%= (r[:type] || r['type']).to_s.humanize %></strong>
+
+            (<%= r[:reason] || "Rewarded" %>)
+            at <%= r[:issued_at] %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No new rewards this time.</p>
+    <% end %>
+  <% end %>
+
+<% else %>
+  <!-- Existing public home content -->
+  <h1>Welcome to Ramen‑Crazy Loyalty Reward App!</h1>
+  <%= link_to "Log in", new_user_session_path %> or
+  <%= link_to "Sign up", new_user_registration_path %>.
+<% end %>
