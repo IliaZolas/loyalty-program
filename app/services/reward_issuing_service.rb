@@ -6,29 +6,45 @@ class RewardIssuingService
 
     def call
         issued = []
-        issued << issue_monthly_coffee   if monthly_points_threshold_met?
+        issued += issue_monthly_coffee   
         issued << issue_birthday_coffee  if birthday_month?
         issued << issue_new_user_movie   if new_user_spend_condition?
-        issued.compact
+        issued.flatten.compact
     end 
 
     private
 
     def monthly_points_threshold_met?
-        month_start = @transaction.occurred_at.beginning_of_month
-        month_end   = @transaction.occurred_at.end_of_month
+        month_range = @transaction.occurred_at.beginning_of_month..@transaction.occurred_at.end_of_month
 
         current_points = @user.points_events
-                            .where(created_at: month_start..@transaction.occurred_at)
+                            .joins(:purchase)  
+                            .where(transactions: { occurred_at: month_range })
                             .sum(:points)
 
         current_points >= 100
     end
 
     def issue_monthly_coffee
-        return if already_issued?(:free_coffee, scope: :monthly)
+        month_range = @transaction.occurred_at.beginning_of_month..@transaction.occurred_at.end_of_month
 
-        create_reward(:free_coffee, "100 Points Coffee")
+        total_pts = @user.points_events
+                        .joins(:purchase)
+                        .where(transactions: { occurred_at: month_range })
+                        .sum(:points)
+
+        coffees_should = (total_pts / 100).floor
+
+        coffees_issued = @user.rewards
+                                .where(reward_type: :free_coffee, issued_at: month_range)
+                                .count
+
+        new_coffees = []
+        ((coffees_should - coffees_issued).clamp(0, Float::INFINITY)).times do
+            new_coffees << create_reward(:free_coffee, "100 Points Coffee")
+        end
+        
+        new_coffees
     end
 
     def birthday_month?
@@ -36,9 +52,9 @@ class RewardIssuingService
     end
 
     def issue_birthday_coffee
-        return if already_issued?(:free_coffee, scope: :birthday_month)
+        return if already_issued?(:birthday_coffee, scope: :birthday_month)
 
-        create_reward(:free_coffee, "Birthday Coffee")
+        create_reward(:birthday_coffee, "Birthday Coffee")
     end
 
     def new_user_spend_condition?

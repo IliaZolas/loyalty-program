@@ -179,7 +179,11 @@ Ensure you have the following installed on your machine:
 
 I spent a total of about 8 hours on this project. As Ruby on Rails has not been a part of my primary tech stack for some time, I needed to familiarise myself with various Rails conventions.
 
-### Conclusion
+### AI Tools used
+
+ChatGPT and Github Copilot.
+
+# Conclusion
 
 This app is intended for backend assessment. I expect the api to be tested via Curl or Postman. 
 
@@ -192,4 +196,3 @@ Thank you for taking the time to evaluate this project!
 All the best,
 
 Ilia 🍻
-
