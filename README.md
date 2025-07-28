@@ -45,7 +45,7 @@ Ensure you have the following installed on your machine:
    rails db:seed 
    ```
 
-   Make sure to copy these values for your http request either via postman or curl
+   Make sure to copy these values from your terminal after running `rails db:seed` for your http request either via postman or curl:
 
   ```
   Seeded Client: DemoClient (API key: some value)
@@ -177,7 +177,7 @@ Ensure you have the following installed on your machine:
 
 ### Time Spent on Project
 
-I spent a total of about 8 hours on this project. As Ruby on Rails has not been my primary some time, I needed to familiarisee myself with various Rails conventions.
+I spent a total of about 8 hours on this project. As Ruby on Rails has not been a part of my primary tech stack for some time, I needed to familiarise myself with various Rails conventions.
 
 ### Conclusion
 
@@ -190,5 +190,6 @@ For a more sophisticated frontend, I would have created a Next.js app that would
 Thank you for taking the time to evaluate this project!
 
 All the best,
+
 Ilia 🍻
 
