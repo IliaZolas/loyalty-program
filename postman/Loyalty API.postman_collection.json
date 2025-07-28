@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "bf8f9699-53d2-42a8-8747-bb0b8f98da70",
+		"name": "Loyalty API",
+		"description": "**Loyalty API Collection**\n\nA Postman collection for the Loyalty Reward App, exposing secured RESTful endpoints to:\n\n- **Submit Transactions**\n    \n    - **POST** `/api/v1/users/:user_id/transactions`\n        \n    - Records a purchase (amount, country, timestamp), calculates loyalty points (10 pts per $100, 2× for foreign spend), and issues any new rewards.\n        \n- **List Rewards**\n    \n    - **GET** `/api/v1/users/:user_id/rewards`\n        \n    - Returns all rewards a user has earned, including type, reason, and timestamp.\n        \n\nEvery request must include:\n\n- **Header** `Authorization: Bearer`\n    \n- **JSON** `Content-Type: application/json`\n    \n\nThis collection also includes environment variables:\n\n- `base_url` (e.g. `http://localhost:3000`)\n    \n- `api_key` (your Client’s API key)\n    \n- `user_id` (the target User’s ID)\n    \n\nUse the **Create Transaction** request to simulate purchases and observe point totals and rewards in real time. Then verify historical rewards with **List Rewards**.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10796960"
+	},
+	"item": [
+		{
+			"name": "Create Transaction",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_key}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"transaction\": {\n    \"amount_cents\": 10000,\n    \"country_code\": \"US\",\n    \"occurred_at\": \"2025-07-26T12:00:00Z\"\n  }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/users/{{user_id}}/transactions",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{user_id}}",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Rewards",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_key}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"transaction\": {\n    \"amount_cents\": 1500000,\n    \"country_code\": \"US\",\n    \"occurred_at\": \"2025-07-26T12:00:00Z\"\n  }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/users/{{user_id}}/rewards",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{user_id}}",
+						"rewards"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{api_key}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
