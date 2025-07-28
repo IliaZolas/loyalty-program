@@ -11,6 +11,23 @@ Ensure you have the following installed on your machine:
 * **Ruby** (version 3.0.2 recommended)
 * **Rails** (version 7.x)
 * **PostgreSQL** (database server)
+
+If you do not have Postgres, run these commands to install it.
+
+```bash
+# macOS / Homebrew
+brew install postgresql
+brew services start postgresql
+```
+
+Rails will use your OS user name as the database role by default.
+
+If you need a dedicated role, run
+
+```bash
+createuser --superuser $USER
+```
+
 * **Node.js** & **Yarn** (for Webpacker and frontend assets)
 * **Git** (source control)
 
