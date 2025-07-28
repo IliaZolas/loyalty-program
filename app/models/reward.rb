@@ -6,6 +6,7 @@ class Reward < ApplicationRecord
 
   enum reward_type: {
     free_coffee:   "free_coffee",
+    birthday_coffee: "birthday_coffee",
     movie_ticket:  "movie_ticket"
   }
 end

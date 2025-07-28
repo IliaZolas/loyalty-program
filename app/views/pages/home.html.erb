@@ -24,21 +24,18 @@
 
             <!-- Display flash‑driven results -->
             <div>
-                <h2>Rewards</h2>
+                <h2>New Rewards</h2>
                 <% if flash[:points_awarded] %>
                     <p><strong>Points for this purchase:</strong> <%= flash[:points_awarded] %></p>
                     <p><strong>Total points:</strong><%= flash[:total_points] %></p>
 
                     <% rewards = flash[:new_rewards] || [] %>
                     <% if rewards.any? %>
-                        <h3>New Rewards Unlocked!</h3>
+                        <p><strong>New Rewards Unlocked!</strong></p>
                         <ul>
                             <% rewards.each do |r| %>
                                 <li>
                                 <strong><%= (r[:type] || r['type']).to_s.humanize %></strong>
-
-                                (<%= r[:reason] || "Rewarded" %>)
-                                at <%= r[:issued_at] %>
                                 </li>
                             <% end %>
                         </ul>
@@ -49,6 +46,25 @@
                     <p>No new rewards this time.</p>
             <% end %>
             </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <h2>Rewards History</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Issued At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @rewards.each do |reward| %>
+                        <tr>
+                            <td><%= reward.reward_type.humanize %></td>
+                            <td><%= reward.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -62,4 +78,4 @@
         <%= link_to "Log in", new_user_session_path, class: "buttons" %>
     </div>
 </div>
-<% end %>å
+<% end %>

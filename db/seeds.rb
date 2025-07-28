@@ -22,4 +22,4 @@ user = User.find_or_create_by!(email: "test@example.com") do |u|
     u.home_country_code  = "US"
     u.birthday           = Date.new(2000, 7, 1)
 end
-puts "Seeded User: #{user.email} (ID: #{user.id})"
+puts "Seeded User: #{user.email} (ID: #{user.id})" 
