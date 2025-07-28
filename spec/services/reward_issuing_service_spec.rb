@@ -45,7 +45,7 @@ RSpec.describe RewardIssuingService, type: :service do
         PointsEarningService.new(tx).call
 
         new_rewards = RewardIssuingService.new(user, tx).call
-        expect(new_rewards.map(&:reward_type)).to include('free_coffee')
+        expect(new_rewards.map(&:reward_type)).to include('birthday_coffee')
         end
     end
 
